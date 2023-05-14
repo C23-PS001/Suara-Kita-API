@@ -1,0 +1,19 @@
+{
+  "name": "suara-kita-api",
+  "version": "1.0.0",
+  "description": "API for Suara Kita mobile application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/C23-PS001/Suara-Kita-API.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/C23-PS001/Suara-Kita-API/issues"
+  },
+  "homepage": "https://github.com/C23-PS001/Suara-Kita-API#readme"
+}

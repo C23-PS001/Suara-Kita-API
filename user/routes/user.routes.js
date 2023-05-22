@@ -5,25 +5,23 @@ const {
   getDataById,
 } = require("../handler/user.handler");
 
-module.exports = [
-  {
-    method: "POST",
-    path: "/user/register",
-    handler: register,
-  },
-  {
-    method: "POST",
-    path: "/user/login",
-    handler: login,
-  },
-  {
-    method: "GET",
-    path: "/user",
-    handler: getData,
-  },
-  {
-    method: "GET",
-    path: "/user/{id}",
-    handler: getDataById,
-  },
-];
+module.exports = function(app) {
+  app.post(
+    '/user/register',
+    register
+  )
+  app.post(
+    '/user/login',
+    login
+  )
+  app.get(
+    '/user',
+    getData
+  )
+
+  app.get(
+    '/user/:id',
+    getDataById
+  )
+}
+

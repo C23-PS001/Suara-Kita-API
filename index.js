@@ -1,40 +1,19 @@
-require('dotenv').config();
-const hapi = require("@hapi/hapi");
-const userRoutes = require('./user/routes/user.routes')
+require('dotenv/config');
+const express = require('express')
+const cors = require('cors')
+const app = express()
 
-const routes1 = [
-  {
-    method: "GET",
-    path: "/",
-    handler: (req, h) => {
-      return "<h1>Welcome to Suara Kita API</h1>";
-    },
-  },
-  {
-    method: "*",
-    path: "/{any*}",
-    handler: (request, h) => {
-      return "Halaman tidak ditemukan";
-    },
-  },
-];
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+app.use(cors())
 
-const init = async () => {
-  const server = hapi.server({
-    port: 8090,
-    host: "0.0.0.0",
-    routes: {
-      cors: {
-        origin: ["*"],
-      },
-    },
-  });
+require('./user/routes/user.routes')(app)
 
-  server.route(userRoutes)
-  server.route(routes1);
+app.get('/', (req, res) => {
+  res.status(200).send("<h1>Welcome to Suara Kita API</h1>");
+})
 
-  await server.start();
-  console.log(`Server running at ${server.info.uri}`);
-};
-
-init();
+const PORT = process.env.PORT || 8090
+app.listen(PORT, () => {
+  console.log(`Server running at ${PORT}`)
+})

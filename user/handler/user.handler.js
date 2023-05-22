@@ -2,7 +2,7 @@ const UserDB = require("../model/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { nanoid } = require("nanoid");
-const moment = require('moment')
+const moment = require("moment");
 
 const register = async (req, h) => {
   try {
@@ -70,7 +70,7 @@ const login = async (req, h) => {
       const res = h.response({
         error: true,
         message:
-          "Akun anda belum terdaftar, Silahkan melakukan registrasi akun!",
+          "Email atau password anda tidak sesuai dengan data yang telah terdaftar.",
       });
       res.code(404);
       return res;
@@ -80,7 +80,8 @@ const login = async (req, h) => {
     if (!isPassValid) {
       const res = h.response({
         error: true,
-        message: "Password anda salah!",
+        message:
+          "Email atau password anda tidak sesuai dengan data yang telah terdaftar.",
       });
       res.code(404);
       return res;
@@ -88,9 +89,10 @@ const login = async (req, h) => {
 
     const JWTtoken = jwt.sign(
       {
+        id: data[0].id,
         nama: data[0].nama,
         nik: data[0].nik,
-        tanggalLahir: moment(data[0].tanggalLahir).format('l'),
+        tanggalLahir: moment(data[0].tanggalLahir).format("l"),
       },
       process.env.SECRET_KEY,
       {
@@ -98,17 +100,25 @@ const login = async (req, h) => {
       }
     );
 
+    // const res = h.response({
+    //   error: false,
+    //   message: "Login berhasil",
+    //   token: JWTtoken,
+    //   loginResult: [
+    //     {
+    //       id: data[0].id,
+    //       nama: data[0].nama,
+    //       nik: data[0].nik,
+    //       tanggalLahir: moment(data[0].tanggalLahir).format("l"),
+    //     },
+    //   ],
+    // });
+    // res.code(200);
+    // return res;
     const res = h.response({
       error: false,
       message: "Login berhasil",
-      token: JWTtoken,
-      loginResult: [
-        {
-          nama: data[0].nama,
-          nik: data[0].nik,
-          tanggalLahir: moment(data[0].tanggalLahir).format("l"),
-        },
-      ],
+      loginToken: JWTtoken
     });
     res.code(200);
     return res;
@@ -141,8 +151,49 @@ const getData = async (res, h) => {
   }
 };
 
+const getDataById = async (req, h) => {
+  try {
+    const { id } = req.params;
+    const result = await UserDB.query().select(
+      'id',
+      'nama',
+      'nik',
+      'email',
+      'tanggalLahir',
+    )
+    .where({ id });
+    if (result.length === 0 || result === []) {
+      const res = h.response({
+        error: true,
+        message: "Data tidak terdaftar pada database",
+      });
+      res.code(500);
+      return res;
+    }
+
+    result[0].tanggalLahir = moment(result[0].tanggalLahir).format("D MMMM YYYY");
+
+    const res = h.response({
+      error: false,
+      message: "Data berhasil diambil",
+      data: result,
+    });
+    res.code(200);
+    return res;
+  } catch (error) {
+    const res = h.response({
+      error: true,
+      message: "Mohon maaf, sedang ada kendala pada server. Mohon menunggu",
+      errMessage: error.message,
+    });
+    res.code(500);
+    return res;
+  }
+};
+
 module.exports = {
   register,
   login,
   getData,
+  getDataById,
 };

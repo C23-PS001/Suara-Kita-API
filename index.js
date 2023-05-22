@@ -22,7 +22,7 @@ const routes1 = [
 const init = async () => {
   const server = hapi.server({
     port: 8090,
-    host: "localhost",
+    host: "0.0.0.0",
     routes: {
       cors: {
         origin: ["*"],

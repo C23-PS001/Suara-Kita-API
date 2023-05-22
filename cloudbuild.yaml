@@ -4,7 +4,7 @@ steps:
   args: ["install"]
 - name: node:18.13.0
   entrypoint: npm
-  args: ["start", "create-env"]
+  args: ["run", "create-env"]
   env:
     - 'SECRET_KEY=${_SECRET_KEY}'
     - 'DB_CLIENT=${_DB_CLIENT}' 

@@ -74,7 +74,8 @@ const login = async (req, res) => {
         id: data[0].id,
         nama: data[0].nama,
         nik: data[0].nik,
-        tanggalLahir: moment(data[0].tanggalLahir).format("l"),
+        email: data[0].email,
+        tanggalLahir: moment(data[0].tanggalLahir).format("D-MM-YYYY"),
       },
       process.env.SECRET_KEY,
       {

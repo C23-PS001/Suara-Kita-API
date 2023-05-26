@@ -71,7 +71,7 @@ exports.uploadFotoKtp = async (req, res) => {
 
     const filenameKtp = `${uuidKtp}_${basenameKtp}${extnameKtp}`;
     const pathFotoKtp = `fotoKtp/${filenameKtp}`;
-    const bucket = process.env.BUCKET_NAME;
+    const bucket = 'upload_foto';
 
     const urlFileKtp = `https://storage.googleapis.com/${bucket}/foto_ktp/${filenameKtp}`;
 

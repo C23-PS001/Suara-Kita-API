@@ -77,7 +77,14 @@ exports.uploadFotoKtp = async (req, res) => {
 
     fotoKtp.mv(pathFotoKtp, async (err) => {
       if (err) {
-        return res.status(500).send({ message: err.message });
+        return res
+          .status(500)
+          .send({
+            error: true,
+            message:
+              "Mohon maaf, sedang ada kendala pada server. Mohon menunggu",
+            errMessage: err.message,
+          });
       }
 
       await storage.bucket(bucket).upload(pathFotoKtp, {
@@ -86,20 +93,28 @@ exports.uploadFotoKtp = async (req, res) => {
 
       fs.unlink(pathFotoKtp, (err) => {
         if (err) {
-          return res.status(500).send({ message: err.messsage });
+          return res
+            .status(500)
+            .send({
+              error: true,
+              message:
+                "Mohon maaf, sedang ada kendala pada server. Mohon menunggu",
+              errMessage: err.message,
+            });
         }
       });
     });
 
     return res.status(200).send({
-      message: "foto masuk, coba cek lagi dah gosah ngide",
+      error: false,
+      message: "Foto berhasil terupload",
       link: urlFileKtp,
     });
   } catch (err) {
     return res.status(500).send({
       error: true,
       message: "Mohon maaf, sedang ada kendala pada server. Mohon menunggu",
-      errMessage: error.message,
+      errMessage: err.message,
     });
   }
 };

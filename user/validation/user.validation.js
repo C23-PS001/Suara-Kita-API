@@ -21,14 +21,16 @@ exports.uploadFotoValidation = (req, res, next) => {
     case !req.files:
       uploadErr.push({
         error: true,
-        message: "fotonya ga ada blog",
+        key: "uploadFotoKtp",
+        message: "Foto tidak boleh kosong",
       });
       break;
 
     case !acceptedType.includes(req.files.fotoKtp.mimetype):
       uploadErr.push({
         error: true,
-        message: "ngerti mana foto ga?",
+        key: "uploadFotoKtp",
+        message: "Harap menggunakan tipe file png, jpg, atau jpeg",
       });
       break;
   }

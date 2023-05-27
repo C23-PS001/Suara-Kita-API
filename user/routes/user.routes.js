@@ -1,5 +1,5 @@
 const UserController = require("../controller/user.controller");
-//const middleware = require('../middleware/user.middleware')
+const middleware = require('../middleware/user.middleware')
 const validation = require("../validation/user.validation");
 
 module.exports = function (app) {
@@ -25,7 +25,7 @@ module.exports = function (app) {
   //ONLY FOR TESTING PURPOSES NOT FOR END-USER
   app.get(
     "/user", 
-    //middleware.verifyJWT, middleware.isUserDataExist,
+    middleware.verifyJWT, middleware.isUserDataExist,
     UserController.getData
   );
 

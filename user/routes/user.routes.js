@@ -1,29 +1,36 @@
-const {
-  register,
-  login,
-  getData,
-  getDataById,
-} = require("../handler/user.handler");
+const UserController = require("../controller/user.controller");
+const middleware = require('../middleware/user.middleware')
+const validation = require("../validation/user.validation");
 
-module.exports = [
-  {
-    method: "POST",
-    path: "/user/register",
-    handler: register,
-  },
-  {
-    method: "POST",
-    path: "/user/login",
-    handler: login,
-  },
-  {
-    method: "GET",
-    path: "/user",
-    handler: getData,
-  },
-  {
-    method: "GET",
-    path: "/user/{id}",
-    handler: getDataById,
-  },
-];
+module.exports = function (app) {
+  app.post(
+    "/user/register",
+    validation.userRegisValidation,
+    validation.runValidation,
+    UserController.register
+  );
+  app.post(
+    "/user/login",
+    validation.userLoginValidation,
+    validation.runValidation,
+    UserController.login
+  );
+
+  app.post(
+    '/test/upload',
+    validation.uploadFotoValidation, validation.runValidation, 
+    UserController.uploadFotoKtp
+  )
+  
+  //ONLY FOR TESTING PURPOSES NOT FOR END-USER
+  app.get(
+    "/user", 
+    middleware.verifyJWT, middleware.isUserDataExist,
+    UserController.getData
+  );
+
+  app.get(
+    "/user/:id", 
+    UserController.getDataById
+  );
+};

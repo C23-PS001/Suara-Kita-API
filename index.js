@@ -1,22 +1,21 @@
-require('dotenv').config();
-const hapi = require("@hapi/hapi");
-const userRoutes = require('./user/routes/user.routes')
+require('dotenv/config');
+const express = require('express')
+const fileUpload = require('express-fileupload')
+const cors = require('cors')
+const app = express()
 
-const init = async () => {
-  const server = hapi.server({
-    port: 8090,
-    host: "localhost",
-    routes: {
-      cors: {
-        origin: ["*"],
-      },
-    },
-  });
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+app.use(cors())
+app.use(fileUpload());
 
-  server.route(userRoutes)
+require('./user/routes/user.routes')(app)
 
-  await server.start();
-  console.log(`Server running at ${server.info.uri}`);
-};
+app.get('/', (req, res) => {
+  res.status(200).send("<h1>Welcome to Suara Kita API</h1>");
+})
 
-init();
+const PORT = process.env.PORT || 8090
+app.listen(PORT, () => {
+  console.log(`Server running at ${PORT}`)
+})

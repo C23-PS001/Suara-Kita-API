@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./index.js"
+    "start": "node ./index.js",
+    "create-env": "printenv > .env"
   },
   "repository": {
     "type": "git",
@@ -19,18 +20,24 @@
   },
   "homepage": "https://github.com/C23-PS001/Suara-Kita-API#readme",
   "dependencies": {
-    "@hapi/hapi": "^21.3.2",
+    "@google-cloud/storage": "^6.10.1",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
-    "jsonwebtoken": "^8.5.1",
+    "express": "^4.18.2",
+    "express-fileupload": "^1.4.0",
+    "express-validator": "^7.0.1",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.0",
     "knex": "^2.1.0",
     "moment": "^2.29.4",
     "mysql2": "^3.3.1",
     "nanoid": "^3.3.6",
     "node-fetch": "^2.6.11",
-    "objection": "^3.0.1"
+    "objection": "^3.0.1",
+    "path": "^0.12.7",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"

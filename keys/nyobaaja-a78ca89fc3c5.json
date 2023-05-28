@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "nyobaaja",
+  "private_key_id": "a78ca89fc3c5c03698a90cd29ee17819fd60da46",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCePQUCiq1GZCk6\nJY2oO7yGqi3Fac/mYiwd/NashuMxhzVaA0CqXgs+7WUlIl6DCSEl6M4k1sMPAFuC\nCgABXR1X7qBJ5XXzme/IK5XeH0SXAJWMCmElcoqTadhLiXn0rRTYqcbn6FJ1gN4u\nCHeeWSfMEHDCDF7Bh9HeibNDjqLMe5MDavhNNZ2iTC/Gl13Ki/l/w6B5dCzJGI6Y\nN+sw4hPek4rYaq7ZqRz0IU+b/dUHlwVYCcYjDcGwHBbE9LZECmQ6J5FjHl6404Sj\nbgIN+IjCjX8SuS0UCTQ+g83AYn0rGIng5lfIO/oOhR7SZVx5MB7+ja1JcsXahcHJ\nIEJttfOZAgMBAAECggEAE0/yMRW4wRsPVwvnRo2H3E2fyXS5DW6U4NIPZz4NM2nD\njqlP9psEt1jk28veihKOq6BGrINTihyqjmvnBUOWhblXcb1iEGmMtLrxDwt05RMK\nrW1E3vukQwqLfeiY7E5FeY36+ynFCpdARpD8/GP4MfUdtekplWgcqpLWwJuDbf5D\nwhYbtYjFuQVLB5kwB8ewGZEx3qu+EkKbOCjHZ6rK5lgTFDsZbuzp7B3Fzujy18gB\nWW5o4YU7WOWYDW39w+ztu5ZbjYdbcux47SjQG+AQO6fetSkTTQRHox+pu9ljKx10\nS4q52u3p60e6zJOX5+OmMKPyE4JDMEkmbbmmCTztawKBgQDV9muLbZZ9hNj8gxll\n15ZLsg9vZyzR/tAwtMTdwam1RaL3DG1OJsLJsThX0yISQOYliRPTPRS3jCGIKMZz\nvZbKCU6UY1UeSuesDxDJjWMhPLEsPoP+g8NVld40oakM4cP0NaL9LlkVuvyA9a1G\nrrwM1pXmY17y/lKu7zzbtwO3gwKBgQC9U90CZqfOjesoOZx7bkWV823031Zr9hfc\nwHNvOwMX6GU93fB9dJbDYJ8Rhw/Xr0iL6CAK7+QcpuKaKdqXBhG9KCez2mPXZIew\nIsBNfgBpuWtER/8TtSQpmppFxqfuRyqEAHZf8O8bZwVC8Hhgs5E96kGHINRhp0RJ\nN6Gi89xhswKBgQDSpUThwuU68/RQPZ1eh23/XfEWQ2R75br/iKicjdJPlZxITqK6\nIyz4NpJ63HEZuW0bnSW4fNUNk1db3pDqV8fBZoJHUrf1F9eXrElhtOHYUhE3tuBq\nTTyc4Owfstxkw0wQ/FFXoy6vVyTKrZSHFvYqSYTQihprbnjmor+urDJrkwKBgQCl\nxw4JcSvUcG4Nbcy4Q4lI0LtiJEE/DWA9moI5TjnaMFKeBnzyzSjJ8Qu3xES5/jCO\n2PVdvkpGUFaw2J8fiF/1+ngxQrQTwWISd4tdD0x7RrFHO6d9cSo2B7q4CEe5G7V9\nmg4M2iH0I5P21isBuZoe1cUE9lkhHN5tIfo1fkRlgwKBgQCkVWZaCfE1TAYXKqwY\noTAsDyJrQjPsKXdKHtyJCUQ2GpKduoyMHHkHCq+mdSiw+ELWVsJgk4kCTW5uRr7G\nsNOUJjb6exhYNMgYRpxoJX620yZvDDJQP2Qvto1A/OFxGhti9Tbhei4cSk9StW0G\nu9OPv/0gYPiYKdGYBvU39ftNWw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "nyoba-gcloud@nyobaaja.iam.gserviceaccount.com",
+  "client_id": "101070245799846542803",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/nyoba-gcloud%40nyobaaja.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

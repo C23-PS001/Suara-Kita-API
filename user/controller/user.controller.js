@@ -1,6 +1,5 @@
 const UserDB = require("../model/user.model");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const { nanoid } = require("nanoid");
 const moment = require("moment");
 const { raw } = require("objection");
@@ -71,20 +70,17 @@ exports.uploadFotoKtp = async (req, res) => {
 
     const filenameKtp = `${uuidKtp}_${basenameKtp}${extnameKtp}`;
     const pathFotoKtp = `fotoKtp/${filenameKtp}`;
-    const bucket = 'upload_foto';
+    const bucket = "upload_foto";
 
     const urlFileKtp = `https://storage.googleapis.com/${bucket}/foto_ktp/${filenameKtp}`;
 
     fotoKtp.mv(pathFotoKtp, async (err) => {
       if (err) {
-        return res
-          .status(500)
-          .send({
-            error: true,
-            message:
-              "Mohon maaf, sedang ada kendala pada server. Mohon menunggu",
-            errMessage: err.message,
-          });
+        return res.status(500).send({
+          error: true,
+          message: "Mohon maaf, sedang ada kendala pada server. Mohon menunggu",
+          errMessage: err.message,
+        });
       }
 
       await storage.bucket(bucket).upload(pathFotoKtp, {
@@ -93,14 +89,12 @@ exports.uploadFotoKtp = async (req, res) => {
 
       fs.unlink(pathFotoKtp, (err) => {
         if (err) {
-          return res
-            .status(500)
-            .send({
-              error: true,
-              message:
-                "Mohon maaf, sedang ada kendala pada server. Mohon menunggu",
-              errMessage: err.message,
-            });
+          return res.status(500).send({
+            error: true,
+            message:
+              "Mohon maaf, sedang ada kendala pada server. Mohon menunggu",
+            errMessage: err.message,
+          });
         }
       });
     });
@@ -140,54 +134,12 @@ exports.login = async (req, res) => {
           "Email atau password anda tidak sesuai dengan data yang telah terdaftar.",
       });
     }
-
-    const JWTtoken = jwt.sign(
-      {
-        id: data[0].id,
-        nama: data[0].nama,
-        nik: data[0].nik,
-        email: data[0].email,
-        tanggalLahir: moment(data[0].tanggalLahir).format("D-MM-YYYY"),
-      },
-      process.env.SECRET_KEY,
-      {
-        expiresIn: "24h",
-      }
-    );
-
-    // const res = h.response({
-    //   error: false,
-    //   message: "Login berhasil",
-    //   token: JWTtoken,
-    //   loginResult: [
-    //     {
-    //       id: data[0].id,
-    //       nama: data[0].nama,
-    //       nik: data[0].nik,
-    //       tanggalLahir: moment(data[0].tanggalLahir).format("l"),
-    //     },
-    //   ],
-    // });
-    // res.code(200);
-    // return res;
     return res.status(200).send({
       error: false,
       message: "Login berhasil",
-      loginToken: JWTtoken,
+      id: data[0].id,
+      nama: data[0].nama,
     });
-  } catch (error) {
-    return res.status(500).send({
-      error: true,
-      message: "Mohon maaf, sedang ada kendala pada server. Mohon menunggu",
-      errMessage: error.message,
-    });
-  }
-};
-
-exports.getData = async (req, res) => {
-  try {
-    const result = await UserDB.query();
-    return res.status(200).send(result);
   } catch (error) {
     return res.status(500).send({
       error: true,

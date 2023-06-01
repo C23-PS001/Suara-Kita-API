@@ -10,6 +10,7 @@ app.use(cors())
 app.use(fileUpload());
 
 require('./user/routes/user.routes')(app)
+require('./voting/routes/voting.routes')(app)
 
 app.get('/', (req, res) => {
   res.status(200).send("<h1>Welcome to Suara Kita API</h1>");

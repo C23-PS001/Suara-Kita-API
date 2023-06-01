@@ -17,7 +17,7 @@ exports.register = async (req, res) => {
     const id = nanoid(16);
     const hashedPass = await bcrypt.hashSync(password, 10);
 
-    const newTglLahir = moment(tanggalLahir.toDate).format("YYYY-MM-DD");
+    const newTglLahir = moment(tanggalLahir).format("YYYY-MM-DD");
     //Check the request data is already exist or no
     const cekDataByNik = await UserDB.query().where({ nik: raw("?", [nik]) });
 

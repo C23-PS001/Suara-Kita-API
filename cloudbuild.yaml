@@ -13,5 +13,5 @@ steps:
     - 'DB_PASS=${_DB_PASS}'
     - 'DB_NAME=${_DB_NAME}'
 - name: "gcr.io/cloud-builders/gcloud"
-  args: ["app", "deploy"]
+  args: ["app", "deploy", "--stop-previous-version"]
 timeout: "1600s"

@@ -1,6 +1,5 @@
 const UserDB = require("../model/user.model");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const { nanoid } = require("nanoid");
 const moment = require("moment");
 const { raw } = require("objection");
@@ -9,8 +8,10 @@ const storage = new Storage({
   keyFilename: "keys/nyobaaja-a78ca89fc3c5.json",
 });
 const fs = require("fs");
+const date = require("date-and-time");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
+
 
 exports.register = async (req, res) => {
   try {
@@ -18,7 +19,7 @@ exports.register = async (req, res) => {
     const id = nanoid(16);
     const hashedPass = await bcrypt.hashSync(password, 10);
 
-    const newTglLahir = moment(tanggalLahir.toDate).format("YYYY-MM-DD");
+    
     //Check the request data is already exist or no
     const cekDataByNik = await UserDB.query().where({ nik: raw("?", [nik]) });
 
@@ -41,7 +42,7 @@ exports.register = async (req, res) => {
       id,
       nama,
       nik,
-      tanggalLahir: newTglLahir,
+      tanggalLahir: date.format(new Date(tanggalLahir), "YYYY-MM-DD"),
       email,
       password: hashedPass,
     });
@@ -141,19 +142,19 @@ exports.login = async (req, res) => {
       });
     }
 
-    const JWTtoken = jwt.sign(
-      {
-        id: data[0].id,
-        nama: data[0].nama,
-        nik: data[0].nik,
-        email: data[0].email,
-        tanggalLahir: moment(data[0].tanggalLahir).format("D-MM-YYYY"),
-      },
-      process.env.SECRET_KEY,
-      {
-        expiresIn: "24h",
-      }
-    );
+    // const JWTtoken = jwt.sign(
+    //   {
+    //     id: data[0].id,
+    //     nama: data[0].nama,
+    //     nik: data[0].nik,
+    //     email: data[0].email,
+    //     tanggalLahir: moment(data[0].tanggalLahir).format("D-MM-YYYY"),
+    //   },
+    //   process.env.SECRET_KEY,
+    //   {
+    //     expiresIn: "24h",
+    //   }
+    // );
 
     // const res = h.response({
     //   error: false,
@@ -173,7 +174,7 @@ exports.login = async (req, res) => {
     return res.status(200).send({
       error: false,
       message: "Login berhasil",
-      loginToken: JWTtoken,
+      // loginToken: JWTtoken,
     });
   } catch (error) {
     return res.status(500).send({

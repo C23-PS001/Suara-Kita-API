@@ -8,8 +8,6 @@ const storage = new Storage({
   keyFilename: "keys/nyobaaja-a78ca89fc3c5.json",
 });
 const fs = require("fs");
-const date = require("date-and-time");
-const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 
 
@@ -37,12 +35,14 @@ exports.register = async (req, res) => {
         message: "Akun anda sudah terdaftar",
       });
     }
+
+
     //If the data isn't exist
     await UserDB.query().insert({
       id,
       nama,
       nik,
-      tanggalLahir: date.format(new Date(tanggalLahir), "YYYY-MM-DD"),
+      tanggalLahir: moment(tanggalLahir).format("YYYY-MM-D"),
       email,
       password: hashedPass,
     });

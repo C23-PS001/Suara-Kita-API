@@ -55,9 +55,9 @@ exports.runValidation = (req, res, next) => {
     });
   }
 
-  if (uploadErr !== undefined && uploadErr.length !== 0){
-    listErrors.push(uploadErr[0])
-  }
+  // if (uploadErr !== undefined && uploadErr.length !== 0){
+  //   listErrors.push(uploadErr[0])
+  // }
 
   if (listErrors.length !== 0) {
     return res.status(400).send(listErrors);

@@ -1,5 +1,13 @@
 const UserController = require("../controller/user.controller");
 const validation = require("../validation/user.validation");
+const multer = require('multer')
+const storage = multer.diskStorage({
+  destination: "./fotoKtp",
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage: storage });
 
 module.exports = function (app) {
   app.post(
@@ -17,7 +25,7 @@ module.exports = function (app) {
 
   app.post(
     '/test/upload',
-    validation.uploadFotoValidation, validation.runValidation, 
+     upload.single('fotoKtp'),
     UserController.uploadFotoKtp
   )
 

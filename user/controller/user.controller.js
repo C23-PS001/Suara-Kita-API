@@ -10,6 +10,9 @@ const storage = new Storage({
 const fs = require("fs");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
+const { promisify } = require('util')
+const unlinkAsync = promisify(fs.unlink);
+
 
 exports.register = async (req, res) => {
   try {
@@ -58,47 +61,52 @@ exports.register = async (req, res) => {
 };
 
 exports.uploadFotoKtp = async (req, res) => {
+  
   try {
-    const { fotoKtp } = req.files;
+    
+    const { fotoKtp } = req.file;
+    console.log(req.file);
     const uuidKtp = uuidv4();
-    const extnameKtp = path.extname(fotoKtp.name);
+    const extnameKtp = path.extname(req.file.filename);
     const basenameKtp = path
-      .basename(fotoKtp.name, extnameKtp)
+      .basename(req.file.filename, extnameKtp)
       .trim()
       .split(" ")
       .join("-");
 
     const filenameKtp = `${uuidKtp}_${basenameKtp}${extnameKtp}`;
-    const pathFotoKtp = `fotoKtp/${filenameKtp}`;
+    // const pathFotoKtp = `fotoKtp/${filenameKtp}`;
     const bucket = "upload_foto";
 
     const urlFileKtp = `https://storage.googleapis.com/${bucket}/foto_ktp/${filenameKtp}`;
-
-    fotoKtp.mv(pathFotoKtp, async (err) => {
-      if (err) {
-        return res.status(500).send({
-          error: true,
-          message: "Mohon maaf, sedang ada kendala pada server. Mohon menunggu",
-          errMessage: err.message,
-        });
-      }
-
-      await storage.bucket(bucket).upload(pathFotoKtp, {
+      await storage.bucket(bucket).upload(req.file.path, {
         destination: `foto_ktp/${filenameKtp}`,
       });
+      await unlinkAsync(req.file.path);
+    // file.mv(pathFotoKtp, async (err) => {
+    //   if (err) {
+    //     return res.status(500).send({
+    //       error: true,
+    //       message: "Mohon maaf, sedang ada kendala pada server. Mohon menunggu",
+    //       errMessage: err.message,
+    //     });
+    //   }
 
-      fs.unlink(pathFotoKtp, (err) => {
-        if (err) {
-          return res.status(500).send({
-            error: true,
-            message:
-              "Mohon maaf, sedang ada kendala pada server. Mohon menunggu",
-            errMessage: err.message,
-          });
-        }
-      });
-    });
 
+
+    //   fs.unlink(pathFotoKtp, (err) => {
+    //     if (err) {
+    //       return res.status(500).send({
+    //         error: true,
+    //         message:
+    //           "Mohon maaf, sedang ada kendala pada server. Mohon menunggu",
+    //         errMessage: err.message,
+    //       });
+    //     }
+    //   });
+    // });
+
+    // next()
     return res.status(200).send({
       error: false,
       message: "Foto berhasil terupload",

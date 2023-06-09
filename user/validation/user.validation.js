@@ -13,36 +13,9 @@ exports.userLoginValidation = [
   check("password").notEmpty().withMessage("Password tidak boleh kosong"),
 ];
 
-exports.uploadFotoValidation = (req, res, next) => {
-  const uploadErr = []
-  const acceptedType = ["image/png", "image/jpg", "image/jpeg"];
-
-  switch (true) {
-    case !req.files:
-      uploadErr.push({
-        error: true,
-        key: "uploadFotoKtp",
-        message: "Foto tidak boleh kosong",
-      });
-      break;
-
-    case !acceptedType.includes(req.files.fotoKtp.mimetype):
-      uploadErr.push({
-        error: true,
-        key: "uploadFotoKtp",
-        message: "Harap menggunakan tipe file png, jpg, atau jpeg",
-      });
-      break;
-  }
-
-  req.uploadErr = uploadErr
-
-  next()
-}
 
 exports.runValidation = (req, res, next) => {
   const errors = validationResult(req).errors;
-  const uploadErr = req.uploadErr
 
   const listErrors = [];
   if (errors.length !== 0) {
@@ -54,10 +27,6 @@ exports.runValidation = (req, res, next) => {
       });
     });
   }
-
-  // if (uploadErr !== undefined && uploadErr.length !== 0){
-  //   listErrors.push(uploadErr[0])
-  // }
 
   if (listErrors.length !== 0) {
     return res.status(400).send(listErrors);

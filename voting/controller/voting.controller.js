@@ -12,14 +12,6 @@ exports.getVotingCount = async (req, res) => {
       .count("* as result")
       .where("candidateNum", "=", "2");
 
-    // if (dataCandidate1[0].result === 0 && dataCandidate2[0].result === 0) {
-    //   return res.status(200).send({
-    //     error: false,
-    //     message: "Data berhasil diambil",
-    //     hasilVote: "Data dari kedua kandidat masih kosong",
-    //   });
-    // }
-
     return res.status(200).send({
       error: false,
       message: "Data berhasil diambil",
@@ -96,6 +88,43 @@ exports.doVoting = async (req, res) => {
       error: true,
       message: "Mohon maaf, sedang ada kendala pada server. Mohon menunggu",
       errMessage: err.message,
+    });
+  }
+};
+
+exports.isUserVote = async (req, res) => {
+  try {
+    const { nik } = req.params;
+    const userDbResult = await UserDB.query()
+      .select("isVoted", "id")
+      .where({ nik: raw("?", [nik]) });
+
+   
+    if (userDbResult.length === 0 || userDbResult === []) {
+      return res.status(200).send({
+        isVoted: true,
+        dataExist: false,
+      });
+    }
+
+    const voteDbResult = await VotingDB.query().where({ idUser: raw("?", [userDbResult[0].id]) })
+
+    if (userDbResult[0].isVoted == 0 && voteDbResult.length === 0) {
+      return res.status(200).send({
+        isVoted: false,
+        dataExist: true,
+      });
+    }
+
+    return res.status(200).send({
+      isVoted: true,
+      dataExist: true,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      error: true,
+      message: "Mohon maaf, sedang ada kendala pada server. Mohon menunggu",
+      errMessage: error.message,
     });
   }
 };

@@ -23,12 +23,6 @@ module.exports = function (app) {
     UserController.login
   );
 
-  // app.post(
-  //   '/test/upload',
-  //    upload.single('fotoKtp'),
-  //   UserController.uploadFotoKtp
-  // )
-
   app.get(
     "/user/:id", 
     UserController.getDataById

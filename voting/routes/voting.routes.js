@@ -9,5 +9,10 @@ module.exports = function (app) {
     app.post(
         '/voting',
         VotingController.doVoting
+    ),
+
+    app.get(
+        '/voting/checkUser/:nik',
+        VotingController.isUserVote
     )
 }

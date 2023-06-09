@@ -10,13 +10,10 @@ exports.register = async (req, res) => {
     const id = nanoid(16);
     const hashedPass = await bcrypt.hashSync(password, 10);
 
-    console.log(typeof tanggalLahir);
-
     const newTglLahir = moment(tanggalLahir).format("YYYY-MM-DD");
 
-    console.log(typeof newTglLahir);
-
     const cekDataByNik = await UserDB.query().where({ nik: raw("?", [nik]) });
+    
 
     if (cekDataByNik.length !== 0 && cekDataByNik !== []) {
       return res.status(200).send({
@@ -32,7 +29,7 @@ exports.register = async (req, res) => {
         message: "Akun anda sudah terdaftar",
       });
     }
-    //If the data isn't exist
+
     await UserDB.query().insert({
       id,
       nama,
@@ -94,7 +91,7 @@ exports.getDataById = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await UserDB.query()
-      .select("id", "nama", "nik", "email", "tanggalLahir")
+      .select("id", "nama", "nik", "email", "tanggalLahir", "isVoted")
       .where({ id: raw("?", [id]) });
     if (result.length === 0 || result === []) {
       return res

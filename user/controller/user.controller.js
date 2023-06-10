@@ -20,6 +20,7 @@ exports.register = async (req, res) => {
         error: true,
         message:
           "NIK anda sudah terdaftar, 1 email hanya boleh mendaftar 1 NIK saja!",
+        idUser: id
       });
     }
     const cekData = await UserDB.query().where({ email: raw("?", [email]) });

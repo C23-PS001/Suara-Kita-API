@@ -92,7 +92,7 @@ exports.getDataById = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await UserDB.query()
-      .select("id", "nama", "nik", "email", "tanggalLahir", "isVoted")
+      .select("id", "nama", "email", "tanggalLahir", "isVoted")
       .where({ id: raw("?", [id]) });
     if (result.length === 0 || result === []) {
       return res

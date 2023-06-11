@@ -1,18 +1,16 @@
-const { check, validationResult } = require('express-validator')
-
+const { check, validationResult } = require("express-validator");
 
 exports.userRegisValidation = [
-    check('email').notEmpty().withMessage('Email tidak boleh kosong'),
-    check('email').isEmail().withMessage('Alamat email tidak valid!'),
-    check('password').notEmpty().withMessage('Password tidak boleh kosong')
-]
+  check("email").notEmpty().withMessage("Email tidak boleh kosong"),
+  check("email").isEmail().withMessage("Alamat email tidak valid!"),
+  check("password").notEmpty().withMessage("Password tidak boleh kosong"),
+];
 
 exports.userLoginValidation = [
   check("email").notEmpty().withMessage("Email tidak boleh kosong"),
   check("email").isEmail().withMessage("Alamat email tidak valid!"),
   check("password").notEmpty().withMessage("Password tidak boleh kosong"),
 ];
-
 
 exports.runValidation = (req, res, next) => {
   const errors = validationResult(req).errors;

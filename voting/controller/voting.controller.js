@@ -33,7 +33,7 @@ exports.doVoting = async (req, res) => {
     
     const userData = await UserDB.query().where({ id: raw("?", [idUser]) })
     if (userData.length === 0) {
-        return res.status(404).send({
+        return res.status(200).send({
             error: true,
             message: 'Data anda tidak terdaftar!'
         })
@@ -42,7 +42,7 @@ exports.doVoting = async (req, res) => {
     //If the ML verification is success and the verified value is updated in server
     
     // if(userData[0].verified === 0){
-    //     return res.status(401).send({
+    //     return res.status(200).send({
     //         error: true,
     //         message: 'Saat ini, anda belum dapat melakukan pemilihan'
     //     })
@@ -56,7 +56,7 @@ exports.doVoting = async (req, res) => {
     }
 
     if(userData[0].isVoted === 1){
-        return res.status(406).send({
+        return res.status(200).send({
             error: true,
             message: 'Anda hanya diperkenankan memilih sekali saja'
         })

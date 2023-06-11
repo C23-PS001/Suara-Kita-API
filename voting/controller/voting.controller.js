@@ -115,11 +115,11 @@ exports.isUserVote = async (req, res) => {
       isVoted: true,
       dataExist: true,
     });
-  } catch (error) {
+  } catch (err) {
     return res.status(500).send({
       error: true,
       message: "Mohon maaf, sedang ada kendala pada server. Mohon menunggu",
-      errMessage: error.message,
+      errMessage: err.message,
     });
   }
 };

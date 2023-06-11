@@ -13,6 +13,7 @@ exports.register = async (req, res) => {
     const newTglLahir = moment(tanggalLahir).format("YYYY-MM-DD");
 
     const cekDataByNik = await UserDB.query().where({ nik: raw("?", [nik]) });
+    
 
     if (cekDataByNik.length !== 0 && cekDataByNik !== []) {
       return res.status(200).send({
@@ -116,3 +117,4 @@ exports.getDataById = async (req, res) => {
     });
   }
 };
+

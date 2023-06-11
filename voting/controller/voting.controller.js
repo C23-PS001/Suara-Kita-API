@@ -1,6 +1,6 @@
 const VotingDB = require("../model/voting.model");
-const UserDB = require('../../user/model/user.model')
-const { raw } = require('objection')
+const UserDB = require("../../user/model/user.model");
+const { raw } = require("objection");
 
 exports.getVotingCount = async (req, res) => {
   try {
@@ -29,60 +29,54 @@ exports.getVotingCount = async (req, res) => {
 
 exports.doVoting = async (req, res) => {
   try {
-    const { idUser, candNum } = req.body
-    
-    const userData = await UserDB.query().where({ id: raw("?", [idUser]) })
+    const { idUser, candNum } = req.body;
+
+    const userData = await UserDB.query().where({ id: raw("?", [idUser]) });
     if (userData.length === 0) {
-        return res.status(200).send({
-            error: true,
-            message: 'Data anda tidak terdaftar!'
-        })
+      return res.status(200).send({
+        error: true,
+        message: "Data anda tidak terdaftar!",
+      });
     }
 
     //If the ML verification is success and the verified value is updated in server
-    
+
     // if(userData[0].verified === 0){
     //     return res.status(200).send({
     //         error: true,
     //         message: 'Saat ini, anda belum dapat melakukan pemilihan'
     //     })
     // }
-    
-    if(candNum < 1 || candNum > 2){
-        return res.status(200).send({
-            error: true,
-            message: 'Silahkan memilih sesuai pada pilihan yang sudah tersedia!'
-        })
+
+    if (candNum < 1 || candNum > 2) {
+      return res.status(200).send({
+        error: true,
+        message: "Silahkan memilih sesuai pada pilihan yang sudah tersedia!",
+      });
     }
 
-    if(userData[0].isVoted === 1){
-        return res.status(200).send({
-            error: true,
-            message: 'Anda hanya diperkenankan memilih sekali saja'
-        })
+    if (userData[0].isVoted === 1) {
+      return res.status(200).send({
+        error: true,
+        message: "Anda hanya diperkenankan memilih sekali saja",
+      });
     }
 
-
-
-
-    await VotingDB.query()
-    .insert({
+    await VotingDB.query().insert({
       idUser,
-      candidateNum: candNum
-    })
+      candidateNum: candNum,
+    });
 
     await UserDB.query()
-    .update({
-      isVoted: 1
-    }).where({ id: raw("?", [idUser]) })
+      .update({
+        isVoted: 1,
+      })
+      .where({ id: raw("?", [idUser]) });
 
     return res.status(200).send({
       error: false,
-      message: 'Pemilihan berhasil'
-    })
-
-
-
+      message: "Pemilihan berhasil",
+    });
   } catch (err) {
     return res.status(500).send({
       error: true,
@@ -99,7 +93,6 @@ exports.isUserVote = async (req, res) => {
       .select("isVoted", "id")
       .where({ nik: raw("?", [nik]) });
 
-   
     if (userDbResult.length === 0 || userDbResult === []) {
       return res.status(200).send({
         isVoted: true,
@@ -107,7 +100,9 @@ exports.isUserVote = async (req, res) => {
       });
     }
 
-    const voteDbResult = await VotingDB.query().where({ idUser: raw("?", [userDbResult[0].id]) })
+    const voteDbResult = await VotingDB.query().where({
+      idUser: raw("?", [userDbResult[0].id]),
+    });
 
     if (userDbResult[0].isVoted == 0 && voteDbResult.length === 0) {
       return res.status(200).send({
